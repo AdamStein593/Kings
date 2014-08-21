@@ -6,15 +6,13 @@ class Hypervolume{
         
         float [] ListOfX = {0,4,3,2,1};
         float  [] ListOfY= {0,4,3,2,1};
-        float  a= CalculateArea (ListOfX,ListOfY);
+        float  AreaOfSolutions= CalculateArea (ListOfX,ListOfY);
         
         float  [] XOptimal ={0,5};
         float  [] YOptimal ={0,5};
-        float  b= CalculateArea (XOptimal,YOptimal);
+        float  AreaOfOptimal= CalculateArea (XOptimal,YOptimal);
         
-        float Hyper= CalculateHypervolume (a,b);
-        System.out.println(a);
-        System.out.println(b);
+        float Hyper= CalculateHypervolume (AreaOfSolutions,AreaOfOptimal);
         System.out.println(Hyper);
     }
     
@@ -26,8 +24,8 @@ class Hypervolume{
         return area;
     }
     
-    public static float CalculateHypervolume(float  a, float  b ){
-        float HyperVolume = a/b;
+    public static float CalculateHypervolume(float  AreaOfSolutions, float  AreaOfOptimal ){
+        float HyperVolume = AreaOfSolutions/AreaOfOptimal;
         return HyperVolume;
     }
 }
