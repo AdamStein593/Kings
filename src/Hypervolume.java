@@ -3,7 +3,7 @@ class Hypervolume{
     public static void main (String[]args){
         Scanner scan =new Scanner(System.in);
         
-        boolean valid=false;
+        boolean ListValid=false;
         System.out.println("Enter numbr of solutions");
         int NumberOfSolutions=scan.nextInt();
         float [] ListOfX = new float[NumberOfSolutions+1];
@@ -11,22 +11,30 @@ class Hypervolume{
         float  [] ListOfY= new float[NumberOfSolutions+1];
         ListOfY[0]=0;
         
-            while (valid==false){
+            while (ListValid==false){
             System.out.println("Enter solutions in accesnding order of x in the form x,y");                   
             scan.useDelimiter("[,\\s]");
             for (int i=1;i<=NumberOfSolutions;i++){
                 ListOfX[i] = Float.valueOf(scan.next());
                 ListOfY[i] = Float.valueOf(scan.next());
             }       
-            valid=ListValidation(ListOfX,ListOfY);         
+            ListValid=ListValidation(ListOfX,ListOfY);         
         }
            
         float  AreaOfSolutions= CalculateArea (ListOfX,ListOfY);
         
-        System.out.println("Enter optimum in the form x,y");
-        scan.useDelimiter("[,\\s]");
-        float  [] XOptimal ={0,Float.valueOf(scan.next())};
-        float  [] YOptimal ={0,Float.valueOf(scan.next())};
+        boolean OptimumValid=false;
+        float [] XOptimal =new float[2];
+        XOptimal[0]=0;
+        float [] YOptimal =new float[2];
+        YOptimal[0]=0;
+        while (OptimumValid==false){
+            System.out.println("Enter optimum in the form x,y");
+            scan.useDelimiter("[,\\s]");
+            XOptimal[1]=Float.valueOf(scan.next());
+            YOptimal[1]=Float.valueOf(scan.next());
+            OptimumValid=OptimumValidation(XOptimal[1],YOptimal[1],ListOfX[ListOfX.length-1],ListOfY[1]);
+        }
         float  AreaOfOptimal= CalculateArea (XOptimal,YOptimal);
         
         float Hyper= CalculateHypervolume (AreaOfSolutions,AreaOfOptimal);
@@ -63,12 +71,26 @@ class Hypervolume{
     public static boolean ListValidation(float [] ListOfX, float [] ListOfY){
         for (int i=1;i<ListOfX.length;i++){
             if (ListOfX [i]<=ListOfX[i-1]){
+                System.out.println("X was not ascending, please re-enter");
                 return false;
             }
             if (ListOfY [i]>=ListOfY[i-1] && i!=1){
+                System.out.println("Y was not descending, please re-enter");
                 return false;
             }
         }
         return true;
-    } 
+    }
+    
+    public static boolean OptimumValidation(float XOptimum, float YOptimum, float MaxX,float MaxY){
+        if (XOptimum<MaxX){
+            System.out.println("The Optimum for X is too low");
+            return false;
+        }
+        if (YOptimum<MaxY){
+            System.out.println("The Optimum for Y is too low");
+            return false;
+        }
+        return true;
+    }
 }
