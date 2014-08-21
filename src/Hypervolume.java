@@ -3,21 +3,23 @@ class Hypervolume{
     public static void main (String[]args){
         Scanner scan =new Scanner(System.in);
         
-        
+        boolean valid=false;
         System.out.println("Enter numbr of solutions");
         int NumberOfSolutions=scan.nextInt();
         float [] ListOfX = new float[NumberOfSolutions+1];
         ListOfX[0]=0;
         float  [] ListOfY= new float[NumberOfSolutions+1];
         ListOfY[0]=0;
-        System.out.println("Enter solutions in accesnding order of x in the form x,y");                   
-        scan.useDelimiter("[,\\s]");
-        for (int i=1;i<=NumberOfSolutions;i++){
-            ListOfX[i] = Float.valueOf(scan.next());
-            ListOfY[i] = Float.valueOf(scan.next());
-        }
         
-        System.out.println(ListValidation(ListOfX,ListOfY));
+            while (valid==false){
+            System.out.println("Enter solutions in accesnding order of x in the form x,y");                   
+            scan.useDelimiter("[,\\s]");
+            for (int i=1;i<=NumberOfSolutions;i++){
+                ListOfX[i] = Float.valueOf(scan.next());
+                ListOfY[i] = Float.valueOf(scan.next());
+            }       
+            valid=ListValidation(ListOfX,ListOfY);         
+        }
            
         float  AreaOfSolutions= CalculateArea (ListOfX,ListOfY);
         
