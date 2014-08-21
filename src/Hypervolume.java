@@ -74,11 +74,12 @@ class Hypervolume{
     
     public static boolean ListValidation(float [] ListOfX, float [] ListOfY){
         //float [], float [] -> boolean
-        //returns true if and only if X has been entered in ascending order and Y decreases as X increases
+        //returns true if all values are positive and X has been entered in ascending order and Y decreases as X increases
         
         //ListValidation({1,2,3},{3,2,1} = true
         //ListValidation({1,2,2},{2,2,1} = false
         //ListValidation({3,2,1},{1,2,3} = false
+        //ListValidation({-1,2,3},{3,2,-1} = false
         
         for (int i=1;i<ListOfX.length;i++){
             if (ListOfX [i]<=ListOfX[i-1]){
@@ -88,6 +89,10 @@ class Hypervolume{
             if (ListOfY [i]>=ListOfY[i-1] && i!=1){
                 //i=1 is excluded as ListOfY[0]=0 so impossible for Y to decrease and remain positive
                 System.out.println("Y was not descending, please re-enter");
+                return false;
+            }
+            if (ListOfX[i]<0 || ListOfY[i]<0){
+                System.out.println("All values must be positive");
                 return false;
             }
         }
