@@ -3,9 +3,17 @@ class Hypervolume{
     public static void main (String[]args){
         Scanner scan =new Scanner(System.in);
   
-        
-        float [] ListOfX = {0,1,2,3,4};
-        float  [] ListOfY= {0,4,3,2,1};
+        float [] ListOfX = new float[5];
+        ListOfX[0]=0;
+        float  [] ListOfY= new float[5];
+        ListOfY[0]=0;
+        System.out.println("Enter solutions in accesnding order of x in the form x,y");                   
+        scan.useDelimiter("[,\\s]");
+        for (int i=1;i<=4;i++){
+            ListOfX[i] = Float.valueOf(scan.next());
+            ListOfY[i] = Float.valueOf(scan.next());
+        }
+           
         float  AreaOfSolutions= CalculateArea (ListOfX,ListOfY);
         
         float  [] XOptimal ={0,5};
