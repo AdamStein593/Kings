@@ -7,4 +7,6 @@ public class Solutions{
         cords[1]=coordinates[1];
     }
     
+    
+    
 }
