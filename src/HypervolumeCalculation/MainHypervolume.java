@@ -7,8 +7,11 @@ class MainHypervolume{
         Solutions solution1 = new Solutions(sol1);
         Solutions solution2 = new Solutions(sol2);
         Solutions solution3 = new Solutions(sol3);
-       
+        
+        System.out.println(solution1.area());
         
        
     }
+    
+    
 }

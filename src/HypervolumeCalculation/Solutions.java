@@ -8,5 +8,8 @@ public class Solutions{
     }
     
     
-    
+   public int area(){
+        int a=cords[0]*cords[1];
+        return a;
+    } 
 }
