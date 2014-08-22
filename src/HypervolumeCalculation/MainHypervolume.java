@@ -14,6 +14,10 @@ class MainHypervolume{
         list2.add(solution1);
         list2.add(solution2);
         list2.add(solution3);
+        
+        int a=(list2.get(0)).area();
+        int b=solution1.area();
+        
               
     }
     

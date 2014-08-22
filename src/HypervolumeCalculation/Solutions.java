@@ -1,15 +1,18 @@
 package HypervolumeCalculation;
-
+import java.util.ArrayList;
+import java.util.List;
 public class Solutions{
-    private int [] cords=new int[2];
+    List<Integer> list = new ArrayList<Integer>();
     public Solutions(int [] coordinates){
-        cords[0]=coordinates[0];
-        cords[1]=coordinates[1];
+        list.add(coordinates[0]);
+        list.add(coordinates[1]);
+        
     }
-    
-    
+        
    public int area(){
-        int a=cords[0]*cords[1];
+        int a=list.get(0)*list.get(1);
         return a;
-    } 
+   } 
+   
+   
 }
