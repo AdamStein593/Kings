@@ -1,0 +1,54 @@
+Comments on source code
+=======================
+
+- Testability
+  
+  - Separate computation logic from user interface to simplify unit testing
+    - This will also make it easier to provide a different interface later on (e.g., one that imports the data from a file)
+    
+  - Use JUnit (or similar) to provide a suite of tests
+
+- Formatting
+
+  - Length of methods / code blocks between empty lines
+
+- Naming conventions
+
+  - Only classes start with a capital letter
+  - Ensure names are meaningful. For example, "Hypervolume" for a class name is perhaps not the most speaking in the context of this project
+
+- Commenting
+
+  - Provide Javadoc comments for all public methods / classes
+  - Include information about assumptions you are making and why you believe they are valid. 
+    For example, why can you assume that it will always be possible to order the inputs such that they will be ascending in X and descending in Y?
+    Why do you assume values must be positive?
+
+- Packages
+
+  - Avoid use of the default package. Instead create packages with meaningful names, grouping classes as appropriate
+  
+- Object orientation
+
+  - Avoid use of static methods
+  - Avoid breaking things that belong together into separate arrays etc. For example, instead of two arrays for the coordinates, use a list of "Solution" class instances
+  
+- Avoid arrays, use Java collections
+
+- Catch exceptions
+
+- Code structure:
+
+  - I like your use of methods for encapsulating constraints. However, this does again mix UI and business logic. Perhaps better (e.g.):
+
+    if (listValid (list)) {
+      // ... do stuff
+    } else {
+      System.out.println ("Problem with list entered. Please try again...");
+    } 
+
+    And no direct output from listValid. Instead of it just returning a boolean, you can also make it return an object that could include a more detailed error message.
+
+  - CalculateHypervolume seems to be of the wrong size. Why not combine it with CalculateArea?
+  
+  - I like your clever trick of introducing a dummy element at the start of the list to simplify the area computation. This needs better documenting, though. 
