@@ -51,14 +51,17 @@ class Hypervolume{
         float hyper= calculateHypervolume (areaOfSolutions,areaOfOptimal);
         System.out.println("H(A): "+hyper);
     }
-    
+    /**
+     * 
+     * @param ListOfX float list
+     * @param ListOfY float list
+     * @return (float) the area underneath the point(s)
+     * 
+     * CalculateArea({0,1,2,3,4},{0,4,3,2,1}) = 10
+     * CalculateArea({0,1,2},{0,2,1}) = 3
+     * CalculateArea({0,1.2,2.8},{0,6,4}) = 13.6
+     */
     public static float  calculateArea(float  [] ListOfX, float [] ListOfY ){
-        // float [], float [] -> float
-        // return the area underneath the point(s)
-        
-        // CalculateArea({0,1,2,3,4},{0,4,3,2,1}) = 10
-        // CalculateArea({0,1,2},{0,2,1}) = 3
-        // CalculateArea({0,1.2,2.8},{0,6,4}) = 13.6
         
         float  area=0f;
         for (int i=1;i<ListOfX.length;i++){
@@ -66,28 +69,36 @@ class Hypervolume{
         }
         return area;
     }
-    
+    /**
+     * 
+     * @param areaOfSolutions float
+     * @param areaOfOptimal float
+     * @return (float) the proportion that the area of the solutions take up when compared to the area of the optimal
+     * 
+     * CalculateHypervolume (7,20) = 0.35
+     * CalculateHypervolume (10,25) = 0.4
+     * CalculateHypervolume (27,35) = 0.77
+     */
     public static float calculateHypervolume(float  areaOfSolutions, float  areaOfOptimal ){
-        //float, float -> float
-        // returns the proportion that the area of the solutions take up when compared to the area of the optimal
-        
-        //CalculateHypervolume (7,20) = 0.35
-        //CalculateHypervolume (10,25) = 0.4
-        //CalculateHypervolume (27,35) = 0.77
         
         float hypervolume = areaOfSolutions/areaOfOptimal;
         return hypervolume;
     }
     
+    /**
+     * 
+     * @param listOfX float list
+     * @param listOfY float list
+     * @return true if all values are positive and X has been entered in ascending order and Y decreases as X increases
+     * 
+     * listValidation({1,2,3},{3,2,1} = true
+     * listValidation({1,2,2},{2,2,1} = false
+     * listValidation({3,2,1},{1,2,3} = false
+     * listValidation({-1,2,3},{3,2,-1} = false
+     */
+    
     public static boolean ListValidation(float [] listOfX, float [] listOfY){
-        //float [], float [] -> boolean
-        //returns true if all values are positive and X has been entered in ascending order and Y decreases as X increases
-        
-        //ListValidation({1,2,3},{3,2,1} = true
-        //ListValidation({1,2,2},{2,2,1} = false
-        //ListValidation({3,2,1},{1,2,3} = false
-        //ListValidation({-1,2,3},{3,2,-1} = false
-        
+     
         for (int i=1;i<listOfX.length;i++){
             if (listOfX [i]<=listOfX[i-1]){
                 return false;
@@ -103,14 +114,21 @@ class Hypervolume{
         return true;
     }
     
+    /**
+     * 
+     * @param xOptimum float
+     * @param yOptimum float
+     * @param maxX float
+     * @param maxY float
+     * @return true if and only if the X and Y value for the optimum are not lower than the max X and Y value given in the solutions
+     * 
+     * optimumValidation(5,5,3,3) = true
+     * optimumValidation(4,2,4,2) = true
+     * optimumValidation(1,1,2,2) = false
+     */
+    
     public static boolean optimumValidation(float xOptimum, float yOptimum, float maxX,float maxY){
-        //float,float,float,float -> boolean
-        //returns true if and only if the X and Y value for the optimum are not lower than the max X and Y value given in the solutions
-        
-        //OptimumValidation(5,5,3,3) = true
-        //OptimumValidation(4,2,4,2) = true
-        //OptimumValidation(1,1,2,2) = false
-        
+          
         if (xOptimum<maxX){
             return false;
         }
