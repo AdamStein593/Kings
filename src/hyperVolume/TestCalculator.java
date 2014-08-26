@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Collections;
 
 public class TestCalculator {
 
@@ -15,7 +16,32 @@ public class TestCalculator {
                        
             double hypervolume=a.calculateHypervolume(reference);
             System.out.println("H("+a.getSolver()+"): "+hypervolume);           
-	}
+            
+            // Print before sorting 
+            
+            // Sort Front based on first dimension
+            Collections.sort(solutionList, new SolutionComparator <Solution>(){
+                @Override
+                public int compare(Solution o1, Solution o2){
+                    double x1 = o1.getX();
+                    double x2 = o2.getX();
+                    
+                    if (x1 > x2){
+                        return -1;
+                    }
+                    if (x1==x2){
+                        return 0;
+                    }
+                    if (x1<x2){
+                        return 1;
+                    }
+                    
+                                                                           
+                }
+            });
+            
+            // Print after sorting
+        }
         
         /**
          * Generates a list of solution objects from a list of solutions in the file "Solutions.txt"
@@ -45,5 +71,6 @@ public class TestCalculator {
         }
         
         
+                
 
 }
