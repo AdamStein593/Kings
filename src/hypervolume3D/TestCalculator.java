@@ -12,20 +12,20 @@ public class TestCalculator {
     public static void main(String[] args) {
         List<Solution> solutionList = generateList();
         
-        //Sorting the generated list in ascending values of X
+        //Sorting the generated list in descending values of Z
         Collections.sort(solutionList, new Comparator<Solution>() {
             @Override
             public int compare(Solution o1, Solution o2) {
-                double x1 = o1.getX();
-                double x2 = o2.getX();
+                double z1 = o1.getZ();
+                double z2 = o2.getZ();
 
-                if (x1 > x2) {
-                    return 1;
+                if (z1 > z2) {
+                    return -1;
                 }
-                if (x1 == x2) {
+                if (z1 == z2) {
                     return 0;
                 } else {
-                    return -1;
+                    return 1;
                 }
 
 
@@ -35,6 +35,7 @@ public class TestCalculator {
         Solution reference = new Solution(5, 5, 5);
 
         Front a = new Front("Algorithm A", solutionList);
+        solutionList.get(0);
 
         double hypervolume = a.calculateHypervolume(reference);
         System.out.println("H(" + a.getSolver() + "): " + hypervolume);
