@@ -20,9 +20,9 @@ public class TestCalculator {
             list.add(solution2);
             list.add(solution3);
 
-            Front a =new Front("a",list);
+            Front a =new Front("Algorithm A",list);
             double hypervolume=a.calculateHypervolume(reference);
-            System.out.println("H(A)"+hypervolume);
+            System.out.println("H("+a.getSolver()+"): "+hypervolume);
 
 	}
 

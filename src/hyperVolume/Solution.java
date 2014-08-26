@@ -10,6 +10,7 @@ public class Solution {
 	private double y;
 	
 	public Solution (double x, double y) {
+                //Constructor 
 		this.x = x;
 		this.y = y;
 	}
