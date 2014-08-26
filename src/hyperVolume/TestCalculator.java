@@ -32,7 +32,7 @@ public class TestCalculator {
                     if (x1==x2){
                         return 0;
                     }
-                    if (x1<x2){
+                    else{
                         return 1;
                     }
                     
