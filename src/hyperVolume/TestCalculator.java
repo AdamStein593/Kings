@@ -1,5 +1,4 @@
 package hyperVolume;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +14,14 @@ public class TestCalculator {
 
             Solution reference =new Solution (5,5);
             
+            //Adding the solutions to be the list
             list.add(solution0);
             list.add(solution1);
             list.add(solution2);
-            list.add(solution3);
-
+            list.add(solution3);          
+            
             Front a =new Front("Algorithm A",list);
+            
             double hypervolume=a.calculateHypervolume(reference);
             System.out.println("H("+a.getSolver()+"): "+hypervolume);
 
