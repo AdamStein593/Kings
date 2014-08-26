@@ -17,7 +17,12 @@ public class TestCalculator {
             System.out.println("H("+a.getSolver()+"): "+hypervolume);           
 	}
         
+        /**
+         * Generates a list of solution objects from a list of solutions in the file "Solutions.txt"
+         * @return a list of Solution objects
+         */
         public static List<Solution>generateList(){
+            //i is the current line number
             int i=0;
             List <Solution>list = new ArrayList();
             ////The first element of the list must be (0,0) to simplify the calculateHypervolume function by not having an if statement
