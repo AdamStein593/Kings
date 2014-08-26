@@ -21,8 +21,8 @@ public class TestCalculator {
             list.add(solution3);
 
             Front a =new Front("a",list);
-            double vol=a.calculateHypervolume(reference);
-            System.out.println(vol);
+            double hypervolume=a.calculateHypervolume(reference);
+            System.out.println("H(A)"+hypervolume);
 
 	}
 
