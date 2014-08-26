@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Represents a set of solutions that make a pareto front from an algorithm.
  * 
- * @author Steffen Zschaler
+ * @author Adam Stein
  * 
  */
 public class Front {

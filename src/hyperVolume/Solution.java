@@ -3,7 +3,7 @@ package hyperVolume;
 /**
  * Represents an individual solution as part of a pareto front produced by a MOO solver.
  * 
- * @author Steffen Zschaler
+ * @author Adam Stein
  */
 public class Solution {
 	private double x;
