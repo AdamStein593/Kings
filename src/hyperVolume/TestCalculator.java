@@ -49,6 +49,7 @@ public class TestCalculator {
      * @return a list of Solution objects
      */
     public static List<Solution> generateList(String fileName) {
+        //ToDo:file format
         List<Solution> list = new ArrayList();
         ////The first element of the list must be (0,0) to simplify the calculateHypervolume function by not having an if statement
         list.add(new Solution(0, 0));

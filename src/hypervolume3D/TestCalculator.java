@@ -31,11 +31,10 @@ public class TestCalculator {
 
             }
         });
-
+        solutionList.add(0,new Solution(0,0,0));
         Solution reference = new Solution(5, 5, 5);
 
-        Front a = new Front("Algorithm A", solutionList);
-        solutionList.get(0);
+        Front a = new Front("Algorithm A", solutionList);       
 
         double hypervolume = a.calculateHypervolume(reference);
         System.out.println("H(" + a.getSolver() + "): " + hypervolume);
@@ -52,7 +51,6 @@ public class TestCalculator {
         int i = 0;
         List<Solution> list = new ArrayList();
         ////The first element of the list must be (0,0) to simplify the calculateHypervolume function by not having an if statement
-        list.add(new Solution(0,0,0));
         try {
             BufferedReader reader = new BufferedReader(new FileReader("C:/Users/Adam/Documents/Sixth Form/Work experience and summer school/Kings/Solutions3D.txt"));
             String line = null;
