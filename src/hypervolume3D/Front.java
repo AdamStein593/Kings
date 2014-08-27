@@ -9,6 +9,7 @@ import java.util.List;
  * @author Adam Stein
  *
  */
+
 public class Front {
 
     private String solver;
@@ -22,6 +23,7 @@ public class Front {
     public String getSolver() {
         return solver;
     }
+    
 
     /**
      *
@@ -31,12 +33,14 @@ public class Front {
      * compared to the area dominated by the reference point
      *
      */
+    
     public double calculateHypervolume(Solution referencePoint) {
         double volume = calculateVolume(listOfSolutions, listOfSolutions);
 
         double hypervolume = volume / (referencePoint.getX() * referencePoint.getY() * referencePoint.getZ());
         return hypervolume;
     }
+    
 
     /**
      * Recursive function that each time it is called has the largest Z value in
@@ -49,6 +53,7 @@ public class Front {
      * for calculations such as area
      * @return the total volume dominated by the solutions
      */
+    
     public double calculateVolume(List<Solution> listOfSolutions, List<Solution> tempListOfSolutions) {
         double area = calculateArea2D(tempListOfSolutions, listOfSolutions);
         double volumeOfSection;
@@ -68,6 +73,7 @@ public class Front {
 
         return volumeOfSection + calculateVolume(listOfSolutions, tempListOfSolutions);
     }
+    
 
     /**
      * Function calculateArea2D is to calculate the area dominated by the
@@ -82,6 +88,7 @@ public class Front {
      * @return the 2D area from the tempListOfSolutions provided where the 2
      * dimensions are Z and Y
      */
+    
     public double calculateArea2D(List<Solution> tempListOfSolutions, List<Solution> listOfSolutions) {
         double area = 0;
         tempListOfSolutions = removeDominated(tempListOfSolutions);
@@ -92,6 +99,7 @@ public class Front {
         }
         return area;
     }
+    
 
     /**
      * Function to remove all the solutions in the tempListOfSolutions that are
@@ -104,6 +112,7 @@ public class Front {
      * @return a list with no solutions completed dominated by others in both
      * the Y and Z
      */
+    
     public List<Solution> removeDominated(List<Solution> tempListOfSolutions) {
         /*A secondary temporary list must be defined or the number of iterates in the for loop will 
          change as the lists are changing size becasue objects are being removed */
