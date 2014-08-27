@@ -65,7 +65,7 @@ public class TestCalculator {
                 i++;
             }
         } catch (Exception e) {
-            System.out.println("Error");
+            System.err.println("Error: " + e.getMessage());
         }
         return list;
     }
