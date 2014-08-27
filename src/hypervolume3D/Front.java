@@ -1,5 +1,6 @@
 package hypervolume3D;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +36,8 @@ public class Front {
      */
     
     public double calculateHypervolume(Solution referencePoint) {
-        double volume = calculateVolume(listOfSolutions, listOfSolutions);
+        
+        double volume = calculateVolume(listOfSolutions, listOfSolutions.get(0));
 
         double hypervolume = volume / (referencePoint.getX() * referencePoint.getY() * referencePoint.getZ());
         return hypervolume;
@@ -44,34 +46,32 @@ public class Front {
 
     /**
      * Recursive function that each time it is called has the largest Z value in
-     * the tempListOfSolutions removed until the list is empty
+     * the solutionList removed until the list is empty
      *
-     * @param listOfSolutions the list of all the solutions on the pareto front
+     * @param solutionList the list of all the solutions on the pareto front
      * from an algorithm
-     * @param tempListOfSolutions a list of some of the solutions on the pareto
-     * front from an algorithm This list is edited by removing some solutions
-     * for calculations such as area
+     * @param lastRemoved the object that was the last removed from the solutionList
      * @return the total volume dominated by the solutions
      */
     
-    public double calculateVolume(List<Solution> listOfSolutions, List<Solution> tempListOfSolutions) {
-        double area = calculateArea2D(tempListOfSolutions, listOfSolutions);
-        double volumeOfSection;
-
-        /*i is the index in the untouched listOfSolutions of the first object in the 
-        tempListOfSolutions (excluding the 0,0,0 solutions at the start of the list)*/
-        int i = listOfSolutions.indexOf(tempListOfSolutions.get(1));
-        //To calculate the volume, the area needs to be multiplied by the difference in x between the term at index i and the term previos        
-        volumeOfSection = area * (listOfSolutions.get(i).getX() - listOfSolutions.get(i - 1).getX()); 
-        
-        //The value in the list with the highest Z value is then removed
-        tempListOfSolutions.remove(1);
+    public double calculateVolume(List<Solution> solutionList, Solution lastRemoved) {
         //If the only remaining object in the list is the 0,0,0 solution, then 0 can be returned 
-        if (tempListOfSolutions.size() == 1) {
+        if (solutionList.size() == 1) {
             return 0;
         }
+        
+        double area = calculateArea2D(solutionList,lastRemoved);
+        double volumeOfSection;
 
-        return volumeOfSection + calculateVolume(listOfSolutions, tempListOfSolutions);
+        //To calculate the volume, the area needs to be multiplied by the difference in x between the term at index i and the term previos        
+        volumeOfSection = area * (solutionList.get(1).getX() - lastRemoved.getX()); 
+        Solution toRemove=new Solution(solutionList.get(1).getX(),solutionList.get(1).getY(),solutionList.get(1).getZ());
+        
+        //The value in the list with the highest Z value is then removed
+        solutionList.remove(1);
+        
+
+        return volumeOfSection + calculateVolume(solutionList, toRemove);
     }
     
 
@@ -80,52 +80,56 @@ public class Front {
      * tempListOfSolutions in just the Y-Z plane as this can the be multiplied
      * by X to find the volume
      *
-     * @param tempListOfSolutionsa list of some of the solutions on the pareto
+     * @param lastRemoved the object that was the last removed from the solutionList
+     * @return the total volume dominated by the solutions
+     * @param solutionList a list of some of the solutions on the pareto
      * front from an algorithm This list is edited by removing some solutions
      * for calculations such as area
-     * @param listOfSolutions the list of all the solutions on the pareto front
-     * from an algorithm
      * @return the 2D area from the tempListOfSolutions provided where the 2
      * dimensions are Z and Y
      */
     
-    public double calculateArea2D(List<Solution> tempListOfSolutions, List<Solution> listOfSolutions) {
+    public double calculateArea2D(List<Solution> solutionList, Solution lastRemoved) {
         double area = 0;
-        tempListOfSolutions = removeDominated(tempListOfSolutions);
-        for (int i = 1; i <= tempListOfSolutions.size() - 1; i++) {
-            int a = listOfSolutions.indexOf(tempListOfSolutions.get(i));
-            area += (tempListOfSolutions.get(i).getY() - listOfSolutions.get(i - 1)
-                    .getY()) * tempListOfSolutions.get(i).getZ();
+        solutionList = removeDominated(solutionList);
+        for (int i = 1; i <= solutionList.size() - 1; i++) {
+            if(i==1){
+            area += (solutionList.get(i).getY() - lastRemoved.getY()) * solutionList.get(i).getZ();
+            }else{
+                area += (solutionList.get(i).getY() - solutionList.get(i-1)
+                    .getY()) * solutionList.get(i).getZ();
+                
+            }
         }
         return area;
     }
     
 
     /**
-     * Function to remove all the solutions in the tempListOfSolutions that are
+     * Function to remove all the solutions in the solutionList that are
      * dominated by other solutions in the Y and Z because dominated solutions
      * will complicate the calculate2DArea function
      *
-     * @param tempListOfSolutionslist list of some of the solutions on the
-     * pareto front from an algorithm This list is edited by removing some
-     * solutions for calculations such as area
+     * @param solutionList a list of some of the solutions on the pareto
+     * front from an algorithm This list is edited by removing some solutions
+     * for calculations such as area
      * @return a list with no solutions completed dominated by others in both
      * the Y and Z
      */
     
-    public List<Solution> removeDominated(List<Solution> tempListOfSolutions) {
+    public List<Solution> removeDominated(List<Solution> solutionList) {
         /*A secondary temporary list must be defined or the number of iterates in the for loop will 
          change as the lists are changing size becasue objects are being removed */
-        List<Solution> listOfSolutions2 = tempListOfSolutions;
-        for (int a = 1; a < tempListOfSolutions.size() - 1; a++) {
-            for (int i = 0; i < tempListOfSolutions.size() - 1; i++) {
+        List<Solution> solutionList2 = solutionList;
+        for (int a = 1; a < solutionList.size() - 1; a++) {
+            for (int i = 0; i < solutionList.size() - 1; i++) {
                 //A solution is dominated if another solution has a greater Y and Z
-                if (tempListOfSolutions.get(a).getY() < tempListOfSolutions.get(i).getY() && tempListOfSolutions.get(a).getZ() < tempListOfSolutions.get(i).getZ()) {
+                if (solutionList.get(a).getY() < solutionList.get(i).getY() && solutionList.get(a).getZ() < solutionList.get(i).getZ()) {
                     //Solution is removed if this is the case
-                    listOfSolutions2.remove(tempListOfSolutions.get(a));
+                    solutionList2.remove(solutionList.get(a));
                 }
             }
         }
-        return listOfSolutions2;
+        return solutionList2;
     }
 }

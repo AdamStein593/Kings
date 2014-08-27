@@ -10,7 +10,8 @@ import java.util.Comparator;
 public class TestCalculator {
 
     public static void main(String[] args) {
-        List<Solution> solutionList = generateList();
+        String fileName="C:/Users/Adam/Documents/Sixth Form/Work experience and summer school/Kings/Solutions3D.txt";
+        List<Solution> solutionList = generateList(fileName);
         
         //Sorting the generated list in descending values of Z
         Collections.sort(solutionList, new Comparator<Solution>() {
@@ -45,14 +46,22 @@ public class TestCalculator {
      * Generates a list of solution objects from a list of solutions in the file "Solutions3D.txt"
      *
      * @return a list of Solution objects
+     * 
+     * Expected file format:
+     * Objective 1, Objective2, Objective 3
+     * x, y, z
+     * x, y, z
+     * x, y, z
+     * .....
+     * 
      */
-    public static List<Solution> generateList() {
+    public static List<Solution> generateList(String fileName) {
         //i is the current line number
         int i = 0;
         List<Solution> list = new ArrayList();
         ////The first element of the list must be (0,0) to simplify the calculateHypervolume function by not having an if statement
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("C:/Users/Adam/Documents/Sixth Form/Work experience and summer school/Kings/Solutions3D.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader(fileName));
             String line = null;
             while ((line = reader.readLine()) != null) {
                 //Skips over i=0 as there are no solutions on this line in the file
