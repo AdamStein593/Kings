@@ -44,23 +44,24 @@ public class Front {
      *
      * @param listOfSolutions the list of all the solutions on the pareto front
      * from an algorithm
-     * @param tempListOfSolutions a list of some of the solutions on the
-     * pareto front from an algorithm This list is edited by removing some
-     * solutions for calculations such as area
+     * @param tempListOfSolutions a list of some of the solutions on the pareto
+     * front from an algorithm This list is edited by removing some solutions
+     * for calculations such as area
      * @return the total volume dominated by the solutions
      */
     public double calculateVolume(List<Solution> listOfSolutions, List<Solution> tempListOfSolutions) {
         double area = calculateArea2D(tempListOfSolutions, listOfSolutions);
         double volumeOfSection;
 
+        /*i is the index in the untouched listOfSolutions of the first object in the 
+        tempListOfSolutions (excluding the 0,0,0 solutions at the start of the list)*/
         int i = listOfSolutions.indexOf(tempListOfSolutions.get(1));
-        if (i > 1) {
-            volumeOfSection = area * (listOfSolutions.get(i).getX() - listOfSolutions.get(i - 1).getX());
-        } else {
-            volumeOfSection = area * listOfSolutions.get(i).getX();
-        }
-
+        //To calculate the volume, the area needs to be multiplied by the difference in x between the term at index i and the term previos        
+        volumeOfSection = area * (listOfSolutions.get(i).getX() - listOfSolutions.get(i - 1).getX()); 
+        
+        //The value in the list with the highest Z value is then removed
         tempListOfSolutions.remove(1);
+        //If the only remaining object in the list is the 0,0,0 solution, then 0 can be returned 
         if (tempListOfSolutions.size() == 1) {
             return 0;
         }
@@ -109,7 +110,9 @@ public class Front {
         List<Solution> listOfSolutions2 = tempListOfSolutions;
         for (int a = 1; a < tempListOfSolutions.size() - 1; a++) {
             for (int i = 0; i < tempListOfSolutions.size() - 1; i++) {
+                //A solution is dominated if another solution has a greater Y and Z
                 if (tempListOfSolutions.get(a).getY() < tempListOfSolutions.get(i).getY() && tempListOfSolutions.get(a).getZ() < tempListOfSolutions.get(i).getZ()) {
+                    //Solution is removed if this is the case
                     listOfSolutions2.remove(tempListOfSolutions.get(a));
                 }
             }
