@@ -63,20 +63,22 @@ public class TestCalculator {
      */
     public static List<Solution> generateList(String fileName) {
         List<Solution> list = new ArrayList();
+        
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             String line = null;
             //First line skipped as there are no solutions here
             line = reader.readLine();
+            
             while ((line = reader.readLine()) != null) {                
                     String[] parts = line.split(", ");
                     list.add(new Solution(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]),Double.parseDouble(parts[2])));
-                }
-                
+                } 
             
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }
+        
         return list;
     }
 }

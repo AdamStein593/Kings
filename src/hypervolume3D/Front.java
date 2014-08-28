@@ -39,6 +39,7 @@ public class Front {
     
     public double calculateHypervolume(Solution referencePoint) {
         List<Solution> solutionList= new ArrayList(listOfSolutions);
+        
         double volume = calculateVolume(solutionList, listOfSolutions.get(0));
 
         double hypervolume = volume / (referencePoint.getX() * referencePoint.getY() * referencePoint.getZ());
@@ -68,8 +69,8 @@ public class Front {
 
         //To calculate the volume, the area needs to be multiplied by the difference in x between the first solution in the list and the last removed solution       
         volumeOfSection = area * (solutionList.get(1).getX() - lastRemoved.getX()); 
-        Solution toRemove=new Solution(solutionList.get(1).getX(),solutionList.get(1).getY(),solutionList.get(1).getZ());
         
+        Solution toRemove=new Solution(solutionList.get(1).getX(),solutionList.get(1).getY(),solutionList.get(1).getZ());        
         //The value in the list with the lowest X value is then removed
         solutionList.remove(1);
         
