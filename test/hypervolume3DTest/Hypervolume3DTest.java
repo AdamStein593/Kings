@@ -42,39 +42,7 @@ public class Hypervolume3DTest {
     }
     
 
-    @Test
-    public void testAscendingXAscendingYDescendingZ() {
-
-        String fileName = "C:/Users/Adam/Documents/Sixth Form/Work experience and summer school/Kings/Solutions3D.txt";
-        List<Solution> solutionList = generateList(fileName);
-
-        Collections.sort(solutionList, new Comparator<Solution>() {
-            @Override
-            public int compare(Solution o1, Solution o2) {
-                double x1 = o1.getX();
-                double x2 = o2.getX();
-
-                if (x1 > x2) {
-                    return 1;
-                }
-                if (x1 == x2) {
-                    return 0;
-                } else {
-                    return -1;
-                }
-
-
-            }
-        });
-        solutionList.add(0, new Solution(0, 0, 0));
-        Solution reference = new Solution(5, 5, 5);
-
-        Front a = new Front("Algorithm A", solutionList);
-        double expResult = 0.112;
-        double actualResult = a.calculateHypervolume(reference);
-        assertEquals(expResult, actualResult, 0.01);
-
-    }
+    
 
     @Test
     public void testListIsUnchanged() {
@@ -144,10 +112,11 @@ public class Hypervolume3DTest {
 
     }
     
+    
     @Test
-    public void testAscendingXDescendingYDescendingZ() {
+    public void testAscendingXAscendingYDescendingZ() {
 
-        String fileName = "C:/Users/Adam/Documents/Sixth Form/Work experience and summer school/Kings/testAscendingXDescendingYDescendingZ.txt";
+        String fileName = "C:/Users/Adam/Documents/Sixth Form/Work experience and summer school/Kings/Solutions3D.txt";
         List<Solution> solutionList = generateList(fileName);
 
         Collections.sort(solutionList, new Comparator<Solution>() {
@@ -172,7 +141,42 @@ public class Hypervolume3DTest {
         Solution reference = new Solution(5, 5, 5);
 
         Front a = new Front("Algorithm A", solutionList);
-        double expResult = 0.16;
+        double expResult = 0.112;
+        double actualResult = a.calculateHypervolume(reference);
+        assertEquals(expResult, actualResult, 0.01);
+
+    }
+    
+    
+    @Test
+    public void testAscendingXAscendingYAscendingZ() {
+
+        String fileName = "C:/Users/Adam/Documents/Sixth Form/Work experience and summer school/Kings/testAscendingXAscendingYAscendingZ.txt";
+        List<Solution> solutionList = generateList(fileName);
+
+        Collections.sort(solutionList, new Comparator<Solution>() {
+            @Override
+            public int compare(Solution o1, Solution o2) {
+                double x1 = o1.getX();
+                double x2 = o2.getX();
+
+                if (x1 > x2) {
+                    return 1;
+                }
+                if (x1 == x2) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+
+
+            }
+        });
+        solutionList.add(0, new Solution(0, 0, 0));
+        Solution reference = new Solution(5, 5, 5);
+
+        Front a = new Front("Algorithm A", solutionList);
+        double expResult = 0.216;
         double actualResult = a.calculateHypervolume(reference);
         assertEquals(expResult, actualResult, 0.01);
 
@@ -211,4 +215,42 @@ public class Hypervolume3DTest {
         assertEquals(expResult, actualResult, 0.01);
 
     }
+    
+    @Test
+    public void testAscendingXDescendingYDescendingZ() {
+
+        String fileName = "C:/Users/Adam/Documents/Sixth Form/Work experience and summer school/Kings/testAscendingXDescendingYDescendingZ.txt";
+        List<Solution> solutionList = generateList(fileName);
+
+        Collections.sort(solutionList, new Comparator<Solution>() {
+            @Override
+            public int compare(Solution o1, Solution o2) {
+                double x1 = o1.getX();
+                double x2 = o2.getX();
+
+                if (x1 > x2) {
+                    return 1;
+                }
+                if (x1 == x2) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+
+
+            }
+        });
+        solutionList.add(0, new Solution(0, 0, 0));
+        Solution reference = new Solution(5, 5, 5);
+
+        Front a = new Front("Algorithm A", solutionList);
+        double expResult = 0.16;
+        double actualResult = a.calculateHypervolume(reference);
+        assertEquals(expResult, actualResult, 0.01);
+
+    }
+    
+    
+    
+    
 }
