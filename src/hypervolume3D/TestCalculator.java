@@ -56,21 +56,21 @@ public class TestCalculator {
      * 
      */
     public static List<Solution> generateList(String fileName) {
-        //i is the current line number
-        int i = 0;
         List<Solution> list = new ArrayList();
         ////The first element of the list must be (0,0) to simplify the calculateHypervolume function by not having an if statement
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             String line = null;
+            //First line skipped as there are no solutions here
+            line = reader.readLine();
             while ((line = reader.readLine()) != null) {
                 //Skips over i=0 as there are no solutions on this line in the file
-                if (i > 0) {
+                
                     String[] parts = line.split(", ");
                     list.add(new Solution(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]),Double.parseDouble(parts[2])));
                 }
-                i++;
-            }
+                
+            
         } catch (Exception e) {
             System.out.println("Error");
         }
