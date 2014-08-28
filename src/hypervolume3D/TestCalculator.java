@@ -3,6 +3,7 @@ package hypervolume3D;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.util.Collections;
 import java.util.Comparator;
@@ -10,7 +11,9 @@ import java.util.Comparator;
 public class TestCalculator {
 
     public static void main(String[] args) {
-        String fileName="C:/Users/Adam/Documents/Sixth Form/Work experience and summer school/Kings/Solutions3D.txt";
+        String currentDirectory = new File("").getAbsolutePath();       
+        String fileName=currentDirectory +"/testFiles/Solutions3D.txt";
+        
         List<Solution> solutionList = generateList(fileName);
         
         //Sorting the generated list in ascending values of X

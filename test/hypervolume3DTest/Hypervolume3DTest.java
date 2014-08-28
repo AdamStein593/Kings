@@ -12,6 +12,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import hypervolume3D.*;
 import static hypervolume3D.TestCalculator.generateList;
+import java.io.File;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -47,7 +48,8 @@ public class Hypervolume3DTest {
     @Test
     public void testListIsUnchanged() {
 
-        String fileName = "C:/Users/Adam/Documents/Sixth Form/Work experience and summer school/Kings/Solutions3D.txt";
+        String currentDirectory = new File("").getAbsolutePath();       
+        String fileName=currentDirectory +"/testFiles/Solutions3D.txt";
         List<Solution> solutionList = generateList(fileName);
 
         Collections.sort(solutionList, new Comparator<Solution>() {
@@ -80,8 +82,8 @@ public class Hypervolume3DTest {
 
     @Test
     public void testRemoveDominated() {
-
-        String fileName = "C:/Users/Adam/Documents/Sixth Form/Work experience and summer school/Kings/testRemoveDominated.txt";
+        String currentDirectory = new File("").getAbsolutePath();       
+        String fileName=currentDirectory +"/testFiles/testRemoveDominated.txt";
         List<Solution> solutionList = generateList(fileName);
 
         Collections.sort(solutionList, new Comparator<Solution>() {
@@ -115,8 +117,9 @@ public class Hypervolume3DTest {
     
     @Test
     public void testAscendingXAscendingYDescendingZ() {
-
-        String fileName = "C:/Users/Adam/Documents/Sixth Form/Work experience and summer school/Kings/Solutions3D.txt";
+        String currentDirectory = new File("").getAbsolutePath();       
+        String fileName=currentDirectory +"/testFiles/Solutions3D.txt";
+       
         List<Solution> solutionList = generateList(fileName);
 
         Collections.sort(solutionList, new Comparator<Solution>() {
@@ -150,8 +153,9 @@ public class Hypervolume3DTest {
     
     @Test
     public void testAscendingXAscendingYAscendingZ() {
+        String currentDirectory = new File("").getAbsolutePath();       
+        String fileName=currentDirectory +"/testFiles/testAscendingXAscendingYAscendingZ.txt";
 
-        String fileName = "C:/Users/Adam/Documents/Sixth Form/Work experience and summer school/Kings/testAscendingXAscendingYAscendingZ.txt";
         List<Solution> solutionList = generateList(fileName);
 
         Collections.sort(solutionList, new Comparator<Solution>() {
@@ -184,8 +188,8 @@ public class Hypervolume3DTest {
     
     @Test
     public void testAscendingXDescendingYAscendingZ() {
-
-        String fileName = "C:/Users/Adam/Documents/Sixth Form/Work experience and summer school/Kings/testAscendingXDescendingYAscendingZ.txt";
+        String currentDirectory = new File("").getAbsolutePath();       
+        String fileName=currentDirectory +"/testFiles/testAscendingXDescendingYAscendingZ.txt";
         List<Solution> solutionList = generateList(fileName);
 
         Collections.sort(solutionList, new Comparator<Solution>() {
@@ -218,8 +222,9 @@ public class Hypervolume3DTest {
     
     @Test
     public void testAscendingXDescendingYDescendingZ() {
-
-        String fileName = "C:/Users/Adam/Documents/Sixth Form/Work experience and summer school/Kings/testAscendingXDescendingYDescendingZ.txt";
+        String currentDirectory = new File("").getAbsolutePath();       
+        String fileName=currentDirectory +"/testFiles/testAscendingXDescendingYDescendingZ.txt";
+        
         List<Solution> solutionList = generateList(fileName);
 
         Collections.sort(solutionList, new Comparator<Solution>() {
@@ -252,8 +257,8 @@ public class Hypervolume3DTest {
     
     @Test
     public void testAscendingXRandomYRandomZ() {
-
-        String fileName = "C:/Users/Adam/Documents/Sixth Form/Work experience and summer school/Kings/testAscendingXRandomYRandomZ.txt";
+        String currentDirectory = new File("").getAbsolutePath();       
+        String fileName=currentDirectory +"/testFiles/testAscendingXRandomYRandomZ.txt";
         List<Solution> solutionList = generateList(fileName);
 
         Collections.sort(solutionList, new Comparator<Solution>() {
