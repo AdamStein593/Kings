@@ -36,8 +36,8 @@ public class Front {
      */
     
     public double calculateHypervolume(Solution referencePoint) {
-        
-        double volume = calculateVolume(listOfSolutions, listOfSolutions.get(0));
+        List<Solution> solutionList= new ArrayList(listOfSolutions);
+        double volume = calculateVolume(solutionList, listOfSolutions.get(0));
 
         double hypervolume = volume / (referencePoint.getX() * referencePoint.getY() * referencePoint.getZ());
         return hypervolume;
@@ -55,6 +55,7 @@ public class Front {
      */
     
     public double calculateVolume(List<Solution> solutionList, Solution lastRemoved) {
+        
         //If the only remaining object in the list is the 0,0,0 solution, then 0 can be returned 
         if (solutionList.size() == 1) {
             return 0;
@@ -82,7 +83,7 @@ public class Front {
      *
      * @param lastRemoved the object that was the last removed from the solutionList
      * @return the total volume dominated by the solutions
-     * @param solutionList a list of some of the solutions on the pareto
+     * @param solutionList2 a list of some of the solutions on the pareto
      * front from an algorithm This list is edited by removing some solutions
      * for calculations such as area
      * @return the 2D area from the tempListOfSolutions provided where the 2
@@ -91,15 +92,12 @@ public class Front {
     
     public double calculateArea2D(List<Solution> solutionList, Solution lastRemoved) {
         double area = 0;
-        solutionList = removeDominated(solutionList);
-        for (int i = 1; i <= solutionList.size() - 1; i++) {
-            if(i==1){
-            area += (solutionList.get(i).getY() - lastRemoved.getY()) * solutionList.get(i).getZ();
-            }else{
-                area += (solutionList.get(i).getY() - solutionList.get(i-1)
-                    .getY()) * solutionList.get(i).getZ();
+        List<Solution>solutionList2 = new ArrayList(removeDominated(solutionList));
+        for (int i = 1; i <= solutionList2.size() - 1; i++) {           
+                area += (solutionList2.get(i).getY() - solutionList2.get(i-1)
+                    .getY()) * solutionList2.get(i).getZ();
                 
-            }
+            
         }
         return area;
     }
@@ -120,13 +118,13 @@ public class Front {
     public List<Solution> removeDominated(List<Solution> solutionList) {
         /*A secondary temporary list must be defined or the number of iterates in the for loop will 
          change as the lists are changing size becasue objects are being removed */
-        List<Solution> solutionList2 = solutionList;
-        for (int a = 1; a < solutionList.size() - 1; a++) {
-            for (int i = 0; i < solutionList.size() - 1; i++) {
+        List<Solution> solutionList2 = new ArrayList(solutionList);
+        for (int i = 1; i < solutionList.size(); i++) {
+            for (Solution solution: solutionList) {
                 //A solution is dominated if another solution has a greater Y and Z
-                if (solutionList.get(a).getY() < solutionList.get(i).getY() && solutionList.get(a).getZ() < solutionList.get(i).getZ()) {
-                    //Solution is removed if this is the case
-                    solutionList2.remove(solutionList.get(a));
+                if (solutionList.get(i).getY() < solution.getY() && solutionList.get(i).getZ() < solution.getZ()) {
+                    //Solution is removed if this is the case           
+                    solutionList2.remove(solutionList.get(i));
                 }
             }
         }
