@@ -1,6 +1,8 @@
 package hypervolume3D;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -93,24 +95,30 @@ public class Front {
         double area = 0;
         //Duplicate list made so when a solution is removed from one list, it doesn,t effect the other list
         List<Solution>solutionList2 = new ArrayList(removeDominated(solutionList));
-        /*Calculating area for lists with only one solution from the input file left 
-        in them and for lists where as X increases, Z decreases  */ 
-        if (solutionList2.size()==2 || solutionList2.get(1).getZ()>solutionList2.get(2).getZ()){
+        //Solutions to be sorted in ascending values of Y to allow the calculation of area to be in just one loop
+        Collections.sort(solutionList2 , new Comparator<Solution>() {
+            @Override
+            public int compare(Solution o1, Solution o2) {
+                double y1 = o1.getY();
+                double y2 = o2.getY();
+
+                if (y1 > y2) {
+                    return 1;
+                }
+                if (y1 == y2) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+
+
+            }
+        });        
             for (int i = 1; i <= solutionList2.size() - 1; i++) {           
                     area += (solutionList2.get(i).getY() - solutionList2.get(i-1)
                         .getY()) * solutionList2.get(i).getZ();
-            }
-        //Calculating area for lists where as X increases, Z increases   
-        }else{
-            for (int i = 1; i <= solutionList2.size() - 2; i++) {           
-                    area += (solutionList2.get(i).getY() - solutionList2.get(i+1)
-                        .getY()) * solutionList2.get(i).getZ();
-
-
-            }
-            //Last solution to be processed does not need its value for Y subtracted by anything
-            area+=solutionList2.get(solutionList2.size() - 1).getY()* solutionList2.get(solutionList2.size() - 1).getZ();
-        }
+            }   
+        
         return area;
     }
     
@@ -133,8 +141,12 @@ public class Front {
         List<Solution> solutionList2 = new ArrayList(solutionList);
         for (int i = 1; i < solutionList.size(); i++) {
             for (Solution solution: solutionList) {
-                //A solution is dominated if another solution has a greater Y and Z
-                if (solutionList.get(i).getY() < solution.getY() && solutionList.get(i).getZ() < solution.getZ()) {
+                /*A solution is dominated if another solution has a greater or equal to Y and Z.
+                 * the statement can not be solutionList.get(i).getY() <= solution.getY() && solutionList.get(i).getZ() <= solution.getZ()
+                 * or all solutions willl be removed when a solution is checked against itself
+                 */
+                if ((solutionList.get(i).getY() <= solution.getY() && solutionList.get(i).getZ() < solution.getZ())
+                        ||(solutionList.get(i).getY() < solution.getY() && solutionList.get(i).getZ() <= solution.getZ())) {
                     //Solution is removed if this is the case           
                     solutionList2.remove(solutionList.get(i));
                 }

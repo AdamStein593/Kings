@@ -278,7 +278,7 @@ public class Hypervolume3DTest {
         Solution reference = new Solution(5, 5, 5);
 
         Front a = new Front("Algorithm A", solutionList);
-        double expResult = 0.408;
+        double expResult = 0.528;
         double actualResult = a.calculateHypervolume(reference);
         assertEquals(expResult, actualResult, 0.01);
 
