@@ -17,16 +17,16 @@ public class TestCalculator {
         Collections.sort(solutionList, new Comparator<Solution>() {
             @Override
             public int compare(Solution o1, Solution o2) {
-                double z1 = o1.getZ();
-                double z2 = o2.getZ();
+                double x1 = o1.getX();
+                double x2 = o2.getX();
 
-                if (z1 > z2) {
-                    return -1;
+                if (x1 > x2) {
+                    return 1;
                 }
-                if (z1 == z2) {
+                if (x1 == x2) {
                     return 0;
                 } else {
-                    return 1;
+                    return -1;
                 }
 
 

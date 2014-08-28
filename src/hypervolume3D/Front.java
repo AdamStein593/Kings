@@ -93,11 +93,21 @@ public class Front {
     public double calculateArea2D(List<Solution> solutionList, Solution lastRemoved) {
         double area = 0;
         List<Solution>solutionList2 = new ArrayList(removeDominated(solutionList));
-        for (int i = 1; i <= solutionList2.size() - 1; i++) {           
-                area += (solutionList2.get(i).getY() - solutionList2.get(i-1)
-                    .getY()) * solutionList2.get(i).getZ();
-                
-            
+        if (solutionList2.size()==2 || solutionList2.get(1).getZ()>solutionList2.get(2).getZ()){
+            for (int i = 1; i <= solutionList2.size() - 1; i++) {           
+                    area += (solutionList2.get(i).getY() - solutionList2.get(i-1)
+                        .getY()) * solutionList2.get(i).getZ();
+
+
+            }
+        }else{
+            for (int i = 1; i <= solutionList2.size() - 2; i++) {           
+                    area += (solutionList2.get(i).getY() - solutionList2.get(i+1)
+                        .getY()) * solutionList2.get(i).getZ();
+
+
+            }
+            area+=solutionList2.get(solutionList2.size() - 1).getY()* solutionList2.get(solutionList2.size() - 1).getZ();
         }
         return area;
     }
