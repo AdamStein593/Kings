@@ -13,7 +13,7 @@ public class TestCalculator {
         String fileName="C:/Users/Adam/Documents/Sixth Form/Work experience and summer school/Kings/Solutions3D.txt";
         List<Solution> solutionList = generateList(fileName);
         
-        //Sorting the generated list in descending values of Z
+        //Sorting the generated list in ascending values of X
         Collections.sort(solutionList, new Comparator<Solution>() {
             @Override
             public int compare(Solution o1, Solution o2) {
@@ -32,6 +32,9 @@ public class TestCalculator {
 
             }
         });
+         /*The first element of the list must be (0,0,0) to simplify the calculateHypervolume function by not having an if statement.
+          * It is added here because it needs to be at the front and this will only be the case if added after the sort
+          */
         solutionList.add(0,new Solution(0,0,0));
         Solution reference = new Solution(5, 5, 5);
 
@@ -57,22 +60,19 @@ public class TestCalculator {
      */
     public static List<Solution> generateList(String fileName) {
         List<Solution> list = new ArrayList();
-        ////The first element of the list must be (0,0) to simplify the calculateHypervolume function by not having an if statement
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             String line = null;
             //First line skipped as there are no solutions here
             line = reader.readLine();
-            while ((line = reader.readLine()) != null) {
-                //Skips over i=0 as there are no solutions on this line in the file
-                
+            while ((line = reader.readLine()) != null) {                
                     String[] parts = line.split(", ");
                     list.add(new Solution(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]),Double.parseDouble(parts[2])));
                 }
                 
             
         } catch (Exception e) {
-            System.out.println("Error");
+            System.err.println("Error: " + e.getMessage());
         }
         return list;
     }

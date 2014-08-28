@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents totalVolume set of solutions that make totalVolume pareto front
+ * Represents a set of solutions that make a pareto front
  * from an algorithm.
  *
  * @author Adam Stein
@@ -45,11 +45,11 @@ public class Front {
     
 
     /**
-     * Recursive function that each time it is called has the largest Z value in
+     * Recursive function that each time it is called has the solution with the smallest X value in
      * the solutionList removed until the list is empty
      *
-     * @param solutionList the list of all the solutions on the pareto front
-     * from an algorithm
+     * @param solutionList a list of some of the solutions on the pareto front
+     * from an algorithm. 
      * @param lastRemoved the object that was the last removed from the solutionList
      * @return the total volume dominated by the solutions
      */
@@ -64,11 +64,11 @@ public class Front {
         double area = calculateArea2D(solutionList,lastRemoved);
         double volumeOfSection;
 
-        //To calculate the volume, the area needs to be multiplied by the difference in x between the term at index i and the term previos        
+        //To calculate the volume, the area needs to be multiplied by the difference in x between the first solution in the list and the last removed solution       
         volumeOfSection = area * (solutionList.get(1).getX() - lastRemoved.getX()); 
         Solution toRemove=new Solution(solutionList.get(1).getX(),solutionList.get(1).getY(),solutionList.get(1).getZ());
         
-        //The value in the list with the highest Z value is then removed
+        //The value in the list with the lowest X value is then removed
         solutionList.remove(1);
         
 
@@ -83,23 +83,24 @@ public class Front {
      *
      * @param lastRemoved the object that was the last removed from the solutionList
      * @return the total volume dominated by the solutions
-     * @param solutionList2 a list of some of the solutions on the pareto
-     * front from an algorithm This list is edited by removing some solutions
-     * for calculations such as area
+     * @param solutionList a list of some of the solutions on the pareto
+     * front from an algorithm
      * @return the 2D area from the tempListOfSolutions provided where the 2
      * dimensions are Z and Y
      */
     
     public double calculateArea2D(List<Solution> solutionList, Solution lastRemoved) {
         double area = 0;
+        //Duplicate list made so when a solution is removed from one list, it doesn,t effect the other list
         List<Solution>solutionList2 = new ArrayList(removeDominated(solutionList));
+        /*Calculating area for lists with only one solution from the input file left 
+        in them and for lists where as X increases, Z decreases  */ 
         if (solutionList2.size()==2 || solutionList2.get(1).getZ()>solutionList2.get(2).getZ()){
             for (int i = 1; i <= solutionList2.size() - 1; i++) {           
                     area += (solutionList2.get(i).getY() - solutionList2.get(i-1)
                         .getY()) * solutionList2.get(i).getZ();
-
-
             }
+        //Calculating area for lists where as X increases, Z increases   
         }else{
             for (int i = 1; i <= solutionList2.size() - 2; i++) {           
                     area += (solutionList2.get(i).getY() - solutionList2.get(i+1)
@@ -107,6 +108,7 @@ public class Front {
 
 
             }
+            //Last solution to be processed does not need its value for Y subtracted by anything
             area+=solutionList2.get(solutionList2.size() - 1).getY()* solutionList2.get(solutionList2.size() - 1).getZ();
         }
         return area;

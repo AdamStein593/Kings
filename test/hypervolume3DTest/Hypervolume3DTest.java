@@ -250,6 +250,39 @@ public class Hypervolume3DTest {
 
     }
     
+    @Test
+    public void testAscendingXRandomYRandomZ() {
+
+        String fileName = "C:/Users/Adam/Documents/Sixth Form/Work experience and summer school/Kings/testAscendingXRandomYRandomZ.txt";
+        List<Solution> solutionList = generateList(fileName);
+
+        Collections.sort(solutionList, new Comparator<Solution>() {
+            @Override
+            public int compare(Solution o1, Solution o2) {
+                double x1 = o1.getX();
+                double x2 = o2.getX();
+
+                if (x1 > x2) {
+                    return 1;
+                }
+                if (x1 == x2) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+
+
+            }
+        });
+        solutionList.add(0, new Solution(0, 0, 0));
+        Solution reference = new Solution(5, 5, 5);
+
+        Front a = new Front("Algorithm A", solutionList);
+        double expResult = 0.408;
+        double actualResult = a.calculateHypervolume(reference);
+        assertEquals(expResult, actualResult, 0.01);
+
+    }
     
     
     
