@@ -3,6 +3,7 @@ package hyperVolume;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.util.Collections;
 import java.util.Comparator;
@@ -10,7 +11,9 @@ import java.util.Comparator;
 public class TestCalculator {
 
     public static void main(String[] args) {
-        String fileName="C:/Users/Adam/Documents/Sixth Form/Work experience and summer school/Kings/Solutions.txt";
+        
+        String currentDirectory = new File("").getAbsolutePath();       
+        String fileName=currentDirectory +"/testFiles/Solutions.txt";
         List<Solution> solutionList = generateList(fileName);
         
         //Sorting the generated list in ascending values of X
@@ -57,7 +60,8 @@ public class TestCalculator {
      */
     public static List<Solution> generateList(String fileName) {
         List<Solution> list = new ArrayList();
-        ////The first element of the list must be (0,0) to simplify the calculateHypervolume function by not having an if statement
+        /* The first element of the list must be (0,0) to simplify the calculateHypervolume 
+        function by not having an if statement*/
         list.add(new Solution(0, 0));
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
