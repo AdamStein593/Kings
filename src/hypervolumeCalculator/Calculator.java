@@ -20,8 +20,8 @@ public class Calculator {
         Collections.sort(solutionList, new Comparator<Solution>() {
             @Override
             public int compare(Solution o1, Solution o2) {
-                double x1 = o1.getX();
-                double x2 = o2.getX();
+                double x1 = o1.get(0);
+                double x2 = o2.get(0);
 
                 if (x1 > x2) {
                     return 1;
@@ -36,8 +36,11 @@ public class Calculator {
             }
         });
          
-        
-        Solution reference = new Solution(5, 5, 5);
+        List <Double>ref =new ArrayList();
+        for (int i=0;i<=solutionList.get(0).getLength()-1;i++){
+            ref.add(5.0);
+        }
+        Solution reference = new Solution(ref);
 
         Front a = new Front("Algorithm A", solutionList);       
 
@@ -68,9 +71,13 @@ public class Calculator {
             //First line skipped as there are no solutions here
             line = reader.readLine();
             
-            while ((line = reader.readLine()) != null) {                
+            while ((line = reader.readLine()) != null) { 
+                    List<Double> objectiveValues = new ArrayList();
                     String[] parts = line.split(", ");
-                    list.add(new Solution(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]),Double.parseDouble(parts[2])));
+                        for (int i=0; i<=parts.length-1;i++){
+                            objectiveValues.add(Double.parseDouble(parts[i]));
+                        }
+                    list.add(new Solution(objectiveValues));
                 } 
             
         } catch (Exception e) {

@@ -36,10 +36,19 @@ public class Front {
      */
     public double calculateHypervolume(Solution referencePoint) {
         List<Solution> solutionList = new ArrayList(listOfSolutions);
+        
+        List <Double>empty =new ArrayList();
+        for (int i=0;i<=solutionList.get(0).getLength()-1;i++){
+            empty.add(0.0);
+        }
+              
+        double volume = calculateVolume(solutionList, new Solution (empty));
+        double volumeOfRef=1;
+        for (int i=0;i<referencePoint.getLength();i++){
+            volumeOfRef*=referencePoint.get(i);
+        }
 
-        double volume = calculateVolume(solutionList, new Solution (0,0,0));
-
-        double hypervolume = volume / (referencePoint.getX() * referencePoint.getY() * referencePoint.getZ());
+        double hypervolume = volume / (volumeOfRef);
         return hypervolume;
     }
 
@@ -63,7 +72,7 @@ public class Front {
 
         double area = calculateArea2D(solutionList);
         //To calculate the volume, the area needs to be multiplied by the difference in x between the first solution in the list and the last removed solution       
-        double volumeOfSection = area * (solutionList.get(0).getX() - lastRemoved.getX());
+        double volumeOfSection = area * (solutionList.get(0).get(0) - lastRemoved.get(0));
         
         //The value in the list with the lowest X value is then removed
         Solution toRemove = solutionList.remove(0);
@@ -85,13 +94,14 @@ public class Front {
     public double calculateArea2D(List<Solution> solutionList) {
         double area = 0;
         //Duplicate list made so when a solution is removed from one list, it doesn't affect the other list
-        List<Solution> solutionList2 = new ArrayList(removeDominated(solutionList));
+        List<Solution> solutionList2 = new ArrayList(removeDominated(solutionList,1));
         //Solutions to be sorted in ascending values of Y to allow the calculation of area to be in just one loop
         Collections.sort(solutionList2, new Comparator<Solution>() {
             @Override
             public int compare(Solution o1, Solution o2) {
-                double y1 = o1.getY();
-                double y2 = o2.getY();
+                
+                double y1 = o1.get(o1.getLength()-2);
+                double y2 = o2.get(o2.getLength()-2);
 
                 if (y1 > y2) {
                     return 1;
@@ -106,10 +116,15 @@ public class Front {
             }
         });
         // The first object in the list is set as a solution with 0,0,0 to simplify the loop
-        solutionList2.add(0,new Solution(0,0,0));
+        List <Double>empty =new ArrayList();
+        for (int i=0;i<=solutionList.get(0).getLength()-1;i++){
+            empty.add(0.0);
+        }
+        solutionList2.add(0,new Solution(empty));
         for (int i = 1; i <= solutionList2.size() - 1; i++) {
-            area += (solutionList2.get(i).getY() - solutionList2.get(i - 1)
-                    .getY()) * solutionList2.get(i).getZ();
+            int a= solutionList2.get(i).getLength()-1;
+            area += (solutionList2.get(i).get(a-1) - solutionList2.get(i - 1)
+                    .get(a-1)) * solutionList2.get(i).get(a);
         }
         // The dummy solution is then removed as it's no longer needed
         solutionList2.remove(0);
@@ -126,19 +141,26 @@ public class Front {
      * @return a list with no solutions completed dominated by others in both
      * the Y and Z
      */
-    public List<Solution> removeDominated(List<Solution> solutionList) {
+    public List<Solution> removeDominated(List<Solution> solutionList,int indexOfCurrentCord) {
         /*A secondary temporary list must be defined or the number of iterates in the for loop will 
          change as the lists are changing size becasue objects are being removed */
         List<Solution> solutionList2 = new ArrayList(solutionList);
+        int lessThan=0;
+        int equal=0;
         for (Solution solution : solutionList) {
             for (Solution solution2 : solutionList) {
-                /*A solution is dominated if another solution has a greater or equal to Y and Z.
-                 * the statement can not be solutionList.get(i).getY() <= solution.getY() && solutionList.get(i).getZ() <= solution.getZ()
-                 * or all solutions willl be removed when a solution is checked against itself
-                 */
-                if ((solution.getY() <= solution2.getY() && solution.getZ() < solution2.getZ())
-                        || (solution.getY() < solution2.getY() && solution.getZ() <= solution2.getZ())) {
-                    //Solution is removed if this is the case           
+                for (int i=indexOfCurrentCord+1;i<solutionList.get(0).getLength()-1;i++){
+                    if (solution.get(i)<solution2.get(i)) {
+                        lessThan++;
+                    }
+                    else if (solution.get(i)==solution2.get(i)) {
+                        equal++;
+                    }
+                    else{
+                        break;
+                    }
+                }
+                if (equal+lessThan==solutionList.get(0).getLength()-1 && lessThan!=0){
                     solutionList2.remove(solution);
                 }
             }

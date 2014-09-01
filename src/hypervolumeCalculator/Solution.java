@@ -1,31 +1,26 @@
 package hypervolumeCalculator;
 
+import java.util.List;
+
 /**
  * Represents an individual solution as part of a pareto front produced by a MOO solver.
  * 
  * @author Adam Stein
  */
 public class Solution {
-	private double x;
-	private double y;
-        private double z;
+	private List<Double> solution;
 	
-	public Solution (double x, double y, double z) {
+	public Solution (List<Double> solution) {
                 //Constructor 
-		this.x = x;
-		this.y = y;
-                this.z = z;
+		this.solution=solution;
 	}
 	
-	public double getX() {
-		return x;
-	}
-	
-	public double getY() {
-		return y;
+	public double get(int index) {
+		return solution.get(index);
 	}
         
-        public double getZ() {
-		return z;
+        public int getLength() {
+		return solution.size();
 	}
+		
 }
