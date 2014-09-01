@@ -3,13 +3,14 @@
  * and open the template in the editor.
  */
 
+import hypervolume2DVersion2.Front;
+import hypervolume2DVersion2.Solution;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import hyperVolume.*;
 import java.util.ArrayList;
 import java.util.List;
 

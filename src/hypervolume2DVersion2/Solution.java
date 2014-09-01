@@ -1,4 +1,4 @@
-package hyperVolume;
+package hypervolume2DVersion2;
 
 /**
  * Represents an individual solution as part of a pareto front produced by a MOO solver.

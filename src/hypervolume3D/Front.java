@@ -37,7 +37,7 @@ public class Front {
     public double calculateHypervolume(Solution referencePoint) {
         List<Solution> solutionList = new ArrayList(listOfSolutions);
 
-        double volume = calculateVolume(solutionList, listOfSolutions.get(0));
+        double volume = calculateVolume(solutionList, new Solution (0,0,0));
 
         double hypervolume = volume / (referencePoint.getX() * referencePoint.getY() * referencePoint.getZ());
         return hypervolume;
@@ -54,22 +54,20 @@ public class Front {
      * @return the total volume dominated by the solutions
      */
     public double calculateVolume(List<Solution> solutionList, Solution lastRemoved) {
-
-        //If the only remaining object in the list is the 0,0,0 solution, then 0 can be returned 
-        if (solutionList.size() == 1) {
+        
+        
+        //If the list is empty, then 0 can be returned 
+        if (solutionList.isEmpty()) {
             return 0;
         }
 
-        double area = calculateArea2D(solutionList, lastRemoved);
-        double volumeOfSection;
+        double area = calculateArea2D(solutionList);
         //To calculate the volume, the area needs to be multiplied by the difference in x between the first solution in the list and the last removed solution       
-        volumeOfSection = area * (solutionList.get(1).getX() - lastRemoved.getX());
-
-        Solution toRemove = new Solution(solutionList.get(1).getX(), solutionList.get(1).getY(), solutionList.get(1).getZ());
+        double volumeOfSection = area * (solutionList.get(0).getX() - lastRemoved.getX());
+        
         //The value in the list with the lowest X value is then removed
-        solutionList.remove(1);
-
-
+        Solution toRemove = solutionList.remove(0);
+        
         return volumeOfSection + calculateVolume(solutionList, toRemove);
     }
 
@@ -84,7 +82,7 @@ public class Front {
      * @return the 2D area from the tempListOfSolutions provided where the 2
      * dimensions are Z and Y
      */
-    public double calculateArea2D(List<Solution> solutionList, Solution lastRemoved) {
+    public double calculateArea2D(List<Solution> solutionList) {
         double area = 0;
         //Duplicate list made so when a solution is removed from one list, it doesn't affect the other list
         List<Solution> solutionList2 = new ArrayList(removeDominated(solutionList));
@@ -107,11 +105,14 @@ public class Front {
 
             }
         });
+        // The first object in the list is set as a solution with 0,0,0 to simplify the loop
+        solutionList2.add(0,new Solution(0,0,0));
         for (int i = 1; i <= solutionList2.size() - 1; i++) {
             area += (solutionList2.get(i).getY() - solutionList2.get(i - 1)
                     .getY()) * solutionList2.get(i).getZ();
         }
-
+        // The dummy solution is then removed as it's no longer needed
+        solutionList2.remove(0);
         return area;
     }
 
@@ -129,16 +130,16 @@ public class Front {
         /*A secondary temporary list must be defined or the number of iterates in the for loop will 
          change as the lists are changing size becasue objects are being removed */
         List<Solution> solutionList2 = new ArrayList(solutionList);
-        for (int i = 1; i < solutionList.size(); i++) {
-            for (Solution solution : solutionList) {
+        for (Solution solution : solutionList) {
+            for (Solution solution2 : solutionList) {
                 /*A solution is dominated if another solution has a greater or equal to Y and Z.
                  * the statement can not be solutionList.get(i).getY() <= solution.getY() && solutionList.get(i).getZ() <= solution.getZ()
                  * or all solutions willl be removed when a solution is checked against itself
                  */
-                if ((solutionList.get(i).getY() <= solution.getY() && solutionList.get(i).getZ() < solution.getZ())
-                        || (solutionList.get(i).getY() < solution.getY() && solutionList.get(i).getZ() <= solution.getZ())) {
+                if ((solution.getY() <= solution2.getY() && solution.getZ() < solution2.getZ())
+                        || (solution.getY() < solution2.getY() && solution.getZ() <= solution2.getZ())) {
                     //Solution is removed if this is the case           
-                    solutionList2.remove(solutionList.get(i));
+                    solutionList2.remove(solution);
                 }
             }
         }

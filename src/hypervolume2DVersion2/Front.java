@@ -1,4 +1,4 @@
-package hyperVolume;
+package hypervolume2DVersion2;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package HypervolumeV1;
+package Hypervolume2DVersion1;
 
 import java.util.Scanner;
 class Hypervolume{

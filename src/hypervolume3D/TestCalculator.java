@@ -35,10 +35,8 @@ public class TestCalculator {
 
             }
         });
-         /*The first element of the list must be (0,0,0) to simplify the calculateHypervolume function by not having an if statement.
-          * It is added here because it needs to be at the front and this will only be the case if added after the sort
-          */
-        solutionList.add(0,new Solution(0,0,0));
+         
+        
         Solution reference = new Solution(5, 5, 5);
 
         Front a = new Front("Algorithm A", solutionList);       
