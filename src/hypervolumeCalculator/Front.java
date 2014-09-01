@@ -94,7 +94,7 @@ public class Front {
     public double calculateArea2D(List<Solution> solutionList) {
         double area = 0;
         //Duplicate list made so when a solution is removed from one list, it doesn't affect the other list
-        List<Solution> solutionList2 = new ArrayList(removeDominated(solutionList,1));
+        List<Solution> solutionList2 = new ArrayList(removeDominated(solutionList,0));
         //Solutions to be sorted in ascending values of Y to allow the calculation of area to be in just one loop
         Collections.sort(solutionList2, new Comparator<Solution>() {
             @Override
@@ -145,22 +145,20 @@ public class Front {
         /*A secondary temporary list must be defined or the number of iterates in the for loop will 
          change as the lists are changing size becasue objects are being removed */
         List<Solution> solutionList2 = new ArrayList(solutionList);
-        int lessThan=0;
-        int equal=0;
+        
         for (Solution solution : solutionList) {
+            int lessThan=0;
+            int equal=0;
             for (Solution solution2 : solutionList) {
-                for (int i=indexOfCurrentCord+1;i<solutionList.get(0).getLength()-1;i++){
+                for (int i=indexOfCurrentCord+1;i<solutionList.get(0).getLength();i++){
                     if (solution.get(i)<solution2.get(i)) {
                         lessThan++;
                     }
                     else if (solution.get(i)==solution2.get(i)) {
                         equal++;
-                    }
-                    else{
-                        break;
-                    }
+                    }                  
                 }
-                if (equal+lessThan==solutionList.get(0).getLength()-1 && lessThan!=0){
+                if (equal+lessThan==(solutionList.get(0).getLength()-1)*solutionList.size() && lessThan!=0){
                     solutionList2.remove(solution);
                 }
             }
