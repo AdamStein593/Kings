@@ -1,4 +1,4 @@
-package hypervolumeCalculator;
+package generalHypervolumeCalculator;
 
 import java.util.ArrayList;
 import java.util.Collections;
