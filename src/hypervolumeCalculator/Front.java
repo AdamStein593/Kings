@@ -147,20 +147,23 @@ public class Front {
         List<Solution> solutionList2 = new ArrayList(solutionList);
         
         for (Solution solution : solutionList) {
-            int lessThan=0;
-            int equal=0;
+            
             for (Solution solution2 : solutionList) {
-                for (int i=indexOfCurrentCord+1;i<solutionList.get(0).getLength();i++){
+                int lessThan=0;
+                int equal=0;
+                for (int i=indexOfCurrentCord+1;i<solutionList.get(0).getLength();i++){                  
                     if (solution.get(i)<solution2.get(i)) {
                         lessThan++;
                     }
                     else if (solution.get(i)==solution2.get(i)) {
                         equal++;
-                    }                  
+                    }
+                    
+                    if (lessThan+equal==solutionList.get(0).getLength()-(indexOfCurrentCord+1) && lessThan!=0){
+                        solutionList2.remove(solution);
+                    }
                 }
-                if (equal+lessThan==(solutionList.get(0).getLength()-1)*solutionList.size() && lessThan!=0){
-                    solutionList2.remove(solution);
-                }
+               
             }
         }
         return solutionList2;
