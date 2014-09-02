@@ -16,6 +16,7 @@ public class Front {
     private String solver;
     private List<Solution> listOfSolutions;
     private int sorter;
+    
 
     public Front(String solver, List<Solution> listOfSolutions) {
         this.solver = solver;
@@ -36,10 +37,10 @@ public class Front {
         }
         double dominated=0;
         if (referencePoint.getLength()==2){
-            dominated=calculateArea2D(listOfSolutions,listOfSolutions.get(0).getLength()-3);
+            dominated=calculateArea2D(solutionList,solutionList.get(0).getLength()-3);
         }
         else{
-            dominated=calculateVolume(solutionList, new Solution (empty));
+            dominated=calculateVolume2(solutionList);
         }
               
         double dominatedByRef=1;
@@ -128,5 +129,53 @@ public class Front {
             }
         }
         return solutionList2;
+    }
+    
+    public double calculateVolume2(List<Solution> solutionList){
+        List<Double> list=new ArrayList(); 
+        double vol=0;
+        for (int i=0;i<listOfSolutions.get(0).getLength()-1;i++){
+                     
+            if (i!=0){ 
+                sorter=i;
+
+                Collections.sort(solutionList, new Comparator<Solution>() {
+                    @Override
+                    public int compare(Solution o1, Solution o2) {
+                        double x1 = o1.get(sorter);
+                        double x2 = o2.get(sorter);
+
+                        if (x1 > x2) {
+                            return 1;
+                        }
+                        if (x1 == x2) {
+                            return 0;
+                        } else {
+                            return -1;
+                        }
+
+
+                    }
+                });
+                for(int j=0;j<listOfSolutions.size();j++){
+                    if(j==0){
+                    vol+=list.get(j)*listOfSolutions.get(j).get(0);
+                    }
+                    else{
+                        vol+=list.get(j)*(listOfSolutions.get(j).get(0)-listOfSolutions.get(j-1).get(0));
+                    }
+                }    
+                
+            }
+            else{                                       
+                for (int j=0; j<listOfSolutions.size();j++){
+                    list.add(calculateArea2D(solutionList,0));
+                    solutionList.remove(0);
+                }
+
+            }
+        }
+        
+        return vol;
     }
 }
