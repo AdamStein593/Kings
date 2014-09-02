@@ -12,7 +12,7 @@ public class Calculator {
 
     public static void main(String[] args) {
         String currentDirectory = new File("").getAbsolutePath();       
-        String fileName=currentDirectory +"/testFiles/Solutions3D.txt";
+        String fileName=currentDirectory +"/testFiles/Solutions4D.txt";
         
         List<Solution> solutionList = generateList(fileName);
         

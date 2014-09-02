@@ -52,20 +52,7 @@ public class Front {
         return hypervolume;
     }
 
-    
-    public double calculateVolume(List<Solution> solutionList, Solution lastRemoved) {
-        
-        if (solutionList.isEmpty()) {
-            return 0;
-        }
-        double area = calculateArea2D(solutionList,listOfSolutions.get(0).getLength()-3);
-        double volumeOfSection = area * (solutionList.get(0).get(0) - lastRemoved.get(0));
-
-        Solution toRemove = solutionList.remove(0);
-        return volumeOfSection + calculateVolume(solutionList, toRemove);
-    }
-
-    
+       
     public double calculateArea2D(List<Solution> solutionList,int index) {
         double area = 0;
         List<Solution> solutionList2 = new ArrayList(removeDominated(solutionList,index));
@@ -159,10 +146,10 @@ public class Front {
                 });
                 for(int j=0;j<listOfSolutions.size();j++){
                     if(j==0){
-                    vol+=list.get(j)*listOfSolutions.get(j).get(0);
+                    vol+=list.get(j)*listOfSolutions.get(j).get(i-1);
                     }
                     else{
-                        vol+=list.get(j)*(listOfSolutions.get(j).get(0)-listOfSolutions.get(j-1).get(0));
+                        vol+=list.get(j)*(listOfSolutions.get(j).get(i-1)-listOfSolutions.get(j-1).get(i-1));
                     }
                 }    
                 
