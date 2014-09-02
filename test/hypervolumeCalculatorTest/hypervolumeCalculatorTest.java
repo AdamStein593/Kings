@@ -354,4 +354,79 @@ public class hypervolumeCalculatorTest {
         assertEquals(expResult, actualResult, 0.01);
 
     }
+    
+    @Test
+    public void test4D() {
+        String currentDirectory = new File("").getAbsolutePath();       
+        String fileName=currentDirectory +"/testFiles/Solutions4D.txt";
+        List<Solution> solutionList = generateList(fileName);
+
+        Collections.sort(solutionList, new Comparator<Solution>() {
+            @Override
+            public int compare(Solution o1, Solution o2) {
+                double x1 = o1.get(0);
+                double x2 = o2.get(0);
+
+                if (x1 > x2) {
+                    return 1;
+                }
+                if (x1 == x2) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+
+
+            }
+        });
+         
+        List <Double>ref =new ArrayList();
+        for (int i=0;i<=solutionList.get(0).getLength()-1;i++){
+            ref.add(5.0);
+        }
+        Solution reference = new Solution(ref);
+
+        Front a = new Front("Algorithm A", solutionList);
+        double expResult = 0.0576;
+        double actualResult = a.calculateHypervolume(reference);
+        assertEquals(expResult, actualResult, 0.01);
+
+    }
+    @Test
+    public void testRemoveDominated4D() {
+        String currentDirectory = new File("").getAbsolutePath();       
+        String fileName=currentDirectory +"/testFiles/testRemoveDominated4D.txt";
+        List<Solution> solutionList = generateList(fileName);
+
+        Collections.sort(solutionList, new Comparator<Solution>() {
+            @Override
+            public int compare(Solution o1, Solution o2) {
+                double x1 = o1.get(0);
+                double x2 = o2.get(0);
+
+                if (x1 > x2) {
+                    return 1;
+                }
+                if (x1 == x2) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+
+
+            }
+        });
+         
+        List <Double>ref =new ArrayList();
+        for (int i=0;i<=solutionList.get(0).getLength()-1;i++){
+            ref.add(5.0);
+        }
+        Solution reference = new Solution(ref);
+
+        Front a = new Front("Algorithm A", solutionList);
+        double expResult = 0.056;
+        double actualResult = a.calculateHypervolume(reference);
+        assertEquals(expResult, actualResult, 0.01);
+
+    }
 }

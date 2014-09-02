@@ -30,17 +30,13 @@ public class Front {
     
     public double calculateHypervolume(Solution referencePoint) {
         List<Solution> solutionList = new ArrayList(listOfSolutions);
-        
-        List <Double>empty =new ArrayList();
-        for (int i=0;i<=solutionList.get(0).getLength()-1;i++){
-            empty.add(0.0);
-        }
+                
         double dominated=0;
         if (referencePoint.getLength()==2){
             dominated=calculateArea2D(solutionList,solutionList.get(0).getLength()-3);
         }
         else{
-            dominated=calculateVolume2(solutionList);
+            dominated=calculateDominated(solutionList);
         }
               
         double dominatedByRef=1;
@@ -118,9 +114,10 @@ public class Front {
         return solutionList2;
     }
     
-    public double calculateVolume2(List<Solution> solutionList){
+    public double calculateDominated(List<Solution> solutionList){
         List<Double> list=new ArrayList(); 
-        double vol=0;
+        
+        double dominate=0;
         for (int i=0;i<listOfSolutions.get(0).getLength()-1;i++){
                      
             if (i!=0){ 
@@ -144,12 +141,14 @@ public class Front {
 
                     }
                 });
-                for(int j=0;j<listOfSolutions.size();j++){
+                List<Solution> solutionList2=new ArrayList(listOfSolutions);
+                
+                for(int j=0;j<solutionList2.size();j++){
                     if(j==0){
-                    vol+=list.get(j)*listOfSolutions.get(j).get(i-1);
+                        dominate+=list.get(j)*solutionList2.get(j).get(i-1);
                     }
                     else{
-                        vol+=list.get(j)*(listOfSolutions.get(j).get(i-1)-listOfSolutions.get(j-1).get(i-1));
+                        dominate+=list.get(j)*(solutionList2.get(j).get(i-1)-solutionList2.get(j-1).get(i-1));
                     }
                 }    
                 
@@ -163,6 +162,6 @@ public class Front {
             }
         }
         
-        return vol;
+        return dominate;
     }
 }

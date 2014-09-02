@@ -16,7 +16,6 @@ public class Calculator {
         
         List<Solution> solutionList = generateList(fileName);
         
-        //Sorting the generated list in ascending values of X
         Collections.sort(solutionList, new Comparator<Solution>() {
             @Override
             public int compare(Solution o1, Solution o2) {
@@ -49,19 +48,7 @@ public class Calculator {
          
     }
 
-    /**
-     * Generates a list of solution objects from a list of solutions in the file "Solutions3D.txt"
-     *
-     * @return a list of Solution objects
-     * 
-     * Expected file format:
-     * Objective 1, Objective2, Objective 3
-     * x, y, z
-     * x, y, z
-     * x, y, z
-     * .....
-     * 
-     */
+    
     public static List<Solution> generateList(String fileName) {
         List<Solution> list = new ArrayList();
         
