@@ -47,7 +47,13 @@ public class Calculator {
          
     }
 
-    
+    /**
+     * Generates a list of Solutions from the file at the directory fileName
+     * 
+     * @param fileName is the directory to the file that wants to be read
+     * 
+     * @return a list of Solutions 
+     */
     public static List<Solution> generateList(String fileName) {
         List<Solution> list = new ArrayList();
         
