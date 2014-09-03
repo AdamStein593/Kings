@@ -15,7 +15,6 @@ public class Front {
 
     private String solver;
     private List<Solution> listOfSolutions;
-    private int sorter;
     
 
     public Front(String solver, List<Solution> listOfSolutions) {
@@ -27,13 +26,17 @@ public class Front {
         return solver;
     }
 
-    
+    /**
+     * 
+     * @param referencePoint
+     * @return 
+     */
     public double calculateHypervolume(Solution referencePoint) {
         List<Solution> solutionList = new ArrayList(listOfSolutions);
                 
         double dominated=0;
         if (referencePoint.getLength()==2){
-            dominated=calculateArea2D(solutionList,solutionList.get(0).getLength()-3);
+            dominated=calculateArea2D(solutionList,0);
         }
         else{
             dominated=calculateDominated(solutionList);
@@ -48,10 +51,15 @@ public class Front {
         return hypervolume;
     }
 
-       
-    public double calculateArea2D(List<Solution> solutionList,int index) {
+    /**
+     * 
+     * @param solutionList
+     * @param dimensionalIndicator
+     * @return 
+     */   
+    public double calculateArea2D(List<Solution> solutionList,int dimensionalIndicator) {
         double area = 0;
-        List<Solution> solutionList2 = new ArrayList(removeDominated(solutionList,index));
+        List<Solution> solutionList2 = new ArrayList(removeDominated(solutionList,dimensionalIndicator));
         Collections.sort(solutionList2, new Comparator<Solution>() {
             @Override
             public int compare(Solution o1, Solution o2) {
@@ -87,8 +95,16 @@ public class Front {
         return area;
     }
 
-    
-    public List<Solution> removeDominated(List<Solution> solutionList,int indexOfCurrentCord) {
+    /**
+     * Function to remove irrelevant solutions for the calculateArea2D function
+     * @param solutionList is a list of all the solutions on the pareto front
+     * @param dimensionalIndicator will be 0 if there are only 2 dimensions to each solution. It will be 1 if each solution has greater than 2 dimensions
+     * This is necessary for the remove dominated function so that it knows what index to start at
+     * @return a list that has no solutions that are completely dominated by another starting from the second index in the list
+     * assuming it has more than 2 dimensions. In the 2 dimensional case it returns a list with no completely dominated solutions
+     * starting from the first index
+     */
+    public List<Solution> removeDominated(List<Solution> solutionList,int dimensionalIndicator) {
         List<Solution> solutionList2 = new ArrayList(solutionList);
         
         for (Solution solution : solutionList) {
@@ -96,15 +112,17 @@ public class Front {
             for (Solution solution2 : solutionList) {
                 int lessThan=0;
                 int equal=0;
-                for (int i=indexOfCurrentCord+1;i<solutionList.get(0).getLength();i++){                  
+                for (int i=dimensionalIndicator;i<solutionList.get(0).getLength();i++){                  
                     if (solution.get(i)<solution2.get(i)) {
                         lessThan++;
                     }
                     else if (solution.get(i)==solution2.get(i)) {
                         equal++;
                     }
-                    
-                    if (lessThan+equal==solutionList.get(0).getLength()-(indexOfCurrentCord+1) && lessThan!=0){
+                    /*remove solutions where all its solutions are dominated by at least one other solution
+                    lessThan can't equal 0 because that means that a solution would remove itself if it was 
+                    the only element left in the list*/
+                    if (lessThan+equal==solutionList.get(0).getLength()-(dimensionalIndicator) && lessThan!=0){
                         solutionList2.remove(solution);
                     }
                 }
@@ -113,49 +131,39 @@ public class Front {
         }
         return solutionList2;
     }
-    
+    /**
+     * Function to calculate the total area dominated by all the solutions in the list
+     * @param solutionList is a list of all the solutions on the pareto front
+     * @return the total area dominated by all the solutions
+     */
     public double calculateDominated(List<Solution> solutionList){
-        List<Double> list=new ArrayList(); 
+        List<Double> areaList=new ArrayList(); 
         
         double dominate=0;
         for (int i=0;i<listOfSolutions.get(0).getLength()-1;i++){
                      
             if (i!=0){ 
-                sorter=i;
-
-                Collections.sort(solutionList, new Comparator<Solution>() {
-                    @Override
-                    public int compare(Solution o1, Solution o2) {
-                        double x1 = o1.get(sorter);
-                        double x2 = o2.get(sorter);
-
-                        if (x1 > x2) {
-                            return 1;
-                        }
-                        if (x1 == x2) {
-                            return 0;
-                        } else {
-                            return -1;
-                        }
-
-
-                    }
-                });
                 List<Solution> solutionList2=new ArrayList(listOfSolutions);
+             
                 
                 for(int j=0;j<solutionList2.size();j++){
                     if(j==0){
-                        dominate+=list.get(j)*solutionList2.get(j).get(i-1);
+                        //Multiplying the correspoinding area to the first solution
+                        dominate+=areaList.get(j)*solutionList2.get(j).get(i-1);
                     }
                     else{
-                        dominate+=list.get(j)*(solutionList2.get(j).get(i-1)-solutionList2.get(j-1).get(i-1));
+                        /*For each term in the list excluding the first solution, multiply the corresponding area to the differnece in the current dimension
+                         * between the current term and the previous term 
+                         */
+                        dominate+=areaList.get(j)*(solutionList2.get(j).get(i-1)-solutionList2.get(j-1).get(i-1));
                     }
                 }    
                 
             }
-            else{                                       
+            else{
+                //Calculates all the 2D area first
                 for (int j=0; j<listOfSolutions.size();j++){
-                    list.add(calculateArea2D(solutionList,0));
+                    areaList.add(calculateArea2D(solutionList,1));
                     solutionList.remove(0);
                 }
 

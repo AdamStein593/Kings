@@ -15,7 +15,6 @@ public class Calculator {
         String fileName=currentDirectory +"/testFiles/Solutions4D.txt";
         
         List<Solution> solutionList = generateList(fileName);
-        
         Collections.sort(solutionList, new Comparator<Solution>() {
             @Override
             public int compare(Solution o1, Solution o2) {
@@ -33,7 +32,7 @@ public class Calculator {
 
 
             }
-        });
+        });      
          
         List <Double>ref =new ArrayList();
         for (int i=0;i<=solutionList.get(0).getLength()-1;i++){
